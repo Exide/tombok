@@ -1,0 +1,33 @@
+{
+  "name": "tombok",
+  "version": "0.0.0",
+  "description": "Lombok for TypeScript",
+  "main": "src/index.ts",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Exide/tombok.git"
+  },
+  "keywords": [
+    "typescript",
+    "lombok"
+  ],
+  "author": "Ryan Zander <exide@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Exide/tombok/issues"
+  },
+  "homepage": "https://github.com/Exide/tombok#readme",
+  "devDependencies": {
+    "@types/jest": "^24.0.12",
+    "@types/node": "^12.0.0",
+    "jest": "^24.8.0",
+    "ts-jest": "^24.0.2",
+    "typescript": "^3.4.5"
+  }
+}
