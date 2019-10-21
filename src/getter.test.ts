@@ -1,4 +1,4 @@
-import { getter } from '../src';
+import getter from './getter';
 
 class Test {
 
@@ -9,5 +9,5 @@ class Test {
 
 test('creates a function that returns the correct value', () => {
   const instance = new Test();
-  expect(instance.foo).toEqual('bar');
+  expect(instance.getFoo()).toEqual('bar');
 });

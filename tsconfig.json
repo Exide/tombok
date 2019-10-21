@@ -1,14 +1,12 @@
 {
+  "include": ["src/**/*.ts"],
   "compilerOptions": {
-    "target": "es5",
+    "target": "es2020",
     "module": "commonjs",
-    "lib": ["es2015"],
     "strict": true,
     "declaration": true,
-    "outDir": "dist",
     "sourceMap": true,
-    "experimentalDecorators": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "test/**/*.test.ts"]
+    "experimentalDecorators": true,
+    "outDir": "dist"
+  }
 }
