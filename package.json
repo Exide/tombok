@@ -8,6 +8,14 @@
     "typescript",
     "lombok"
   ],
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "package.json",
+    "README.md",
+    "LICENSE",
+    "dist"
+  ],
   "homepage": "https://github.com/Exide/tombok#readme",
   "repository": {
     "type": "git",
@@ -17,17 +25,18 @@
     "url": "https://github.com/Exide/tombok/issues"
   },
   "scripts": {
-    "test": "jest"
+    "build": "npx tsc",
+    "test": "npx jest"
   },
   "engines": {
-    "node": "12.12.0",
-    "npm": "6.11.3"
+    "node": ">=10.0.0",
+    "npm": ">=5.6.0"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.12",
+    "@types/jest": "^25.1.0",
     "@types/node": "^12.0.0",
-    "jest": "^24.8.0",
-    "ts-jest": "^24.0.2",
-    "typescript": "^3.6.4"
+    "jest": "^25.1.0",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3"
   }
 }

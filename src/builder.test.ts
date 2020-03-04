@@ -1,9 +1,17 @@
-import builder from './builder';
+import { builder } from './builder';
+import {types as utilTypes} from 'util';
+
+interface Testing {
+  a: number;
+  b: string;
+  c: boolean;
+  d?: number;
+}
 
 test('adds a static builder method', () => {
   @builder class Test {}
   expect(Test.builder).toBeDefined();
-  expect(Test.builder).toBe(Function);
+  expect(Test.builder).toBeInstanceOf(Function);
 });
 
 test('builder method not visible on instances', () => {
@@ -14,7 +22,8 @@ test('builder method not visible on instances', () => {
 
 test('build method returns an instance of the class', () => {
   @builder class Test {}
-  expect(Test.builder().build()).toBe(Test);
+  const built = Test.builder().build();
+  expect(built.constructor.name).toBe('Test');
 });
 
 test('property setters available from the builder', () => {
@@ -25,16 +34,22 @@ test('property setters available from the builder', () => {
 
   const testBuilder = Test.builder();
   expect(testBuilder.foo).toBeDefined();
-  expect(testBuilder.foo).toBe(Function);
+  expect(testBuilder.foo).toBeInstanceOf(Function);
 });
 
-xtest('property setters take a properly typed argument', () => {
+test('property setters take a properly typed argument', () => {
   @builder
-  class Test {
-    private foo: string = 'bar';
+  class Test implements Testing {
+    private a: number;
+    private b: string;
+    private c: boolean;
   }
 
   const testBuilder = Test.builder();
+  expect(testBuilder.a).toBeDefined();
+  expect(testBuilder.b).toBeDefined();
+  expect(testBuilder.c).toBeDefined();
+
 // todo: research how to get function argument types
   // expect(testBuilder.foo).toHaveArguments(string);
 });
@@ -46,15 +61,27 @@ test('property setters return the updated builder', () => {
   }
 
   const testBuilder = Test.builder();
-  expect(testBuilder.foo('something')).toBe(builder);
+  expect(utilTypes.isProxy(testBuilder)).toBeTruthy();
+  expect(utilTypes.isProxy(testBuilder.foo('something'))).toBeTruthy();
 });
 
 test('property setters actually set the property', () => {
   @builder
-  class Test {
-    public foo: string = 'bar'
+  class Test implements Testing {
+    public a!: number;
+    public b!: string;
+    public c!: boolean;
   }
 
-  const test = Test.builder().foo('baz').build();
-  expect(test.foo).toEqual('baz');
+  const testBuilder = Test.builder()
+      .a(10)
+      .b('abc')
+      .c(true);
+
+  const built = testBuilder.build();
+  expect(built).toEqual({
+    a: 10,
+    b: 'abc',
+    c: true
+  });
 });

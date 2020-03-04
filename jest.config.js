@@ -1,6 +1,10 @@
 module.exports = {
-  transform: {
-    '\\.ts$': 'ts-jest',
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  globals: {
+    'ts-jest': {
+      diagnostics: false, // Necessary to avoid typeschecking error in decorators
+    }
   },
-  testRegex: '\\.test.ts$'
+  testRegex: '\\.test.ts$',
 };

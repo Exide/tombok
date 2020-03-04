@@ -1,4 +1,4 @@
-import allArgsConstructor from './all-args-constructor';
+import { allArgsConstructor } from './all-args-constructor';
 
 test('constructor takes all properties as arguments', () => {
   @allArgsConstructor
