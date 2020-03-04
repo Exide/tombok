@@ -1,25 +1,44 @@
-type Constructor<T> = new (...args: any[]) => T;
-
-export default function <T extends Constructor<{}>>(Base: T) {
-  return class extends Base {
-    public static builder() { return new Builder<T>(Base); };
-  }
+type IBuilder<T> = {
+  [k in keyof T]-?: (arg: T[k]) => IBuilder<T>
 }
+& {
+  build(): T
+};
 
-class Builder<T> {
+type Constructor<T = {}> = new (...args: any[]) => T;
 
-  private readonly original: any;
+export function builder<T extends Constructor>(Base: T) {
+  return class extends Base {
+  /**
+   * Create a Builder for a class. Returned objects will be of the class type.
+   *
+   * e.g. let obj: MyClass = MyClass.builder().a(5).b('str').build();
+   * @param type The class to instantiate.
+   * @param {Partial<T>} [template] Class partial which the builder will derive initial params from.
+   */
+    public static builder(template?: Partial<T>): IBuilder<T> {
+      const typeConstructor = Base.prototype.constructor as Constructor<T>;
+      const built: any = template ? Object.assign({}, template) : {};
 
-  constructor(original: any) {
-    this.original = original;
-    // todo: create an instance property for each original property
-    // todo: set instance property value to original value if it exists (default)
-    // todo: create a method for each instance property
+      const builder = new Proxy(
+        {},
+        {
+          get(target: any, prop: string) {
+            if ('build' === prop) {
+              // Instantiate the input class with props
+              const obj: T = new typeConstructor();
+              return () => Object.assign(obj, {...built});
+            }
+
+            return (x: any): any => {
+              built[prop] = x;
+              return builder as IBuilder<T>;
+            };
+          }
+        }
+      );
+
+      return builder as IBuilder<T>;
+    }
   }
-
-  build(): T {
-    // todo: build an original, passing in the current instance properties
-    return new this.original();
-  }
-
 }

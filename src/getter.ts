@@ -1,7 +1,10 @@
 import { capitalize } from './utils';
 
-export default function getter(target: any, key: string) {
-  const capitalizedKey = capitalize(key);
-  const methodName = `get${capitalizedKey}`;
-  Object.defineProperty(target, methodName, { value: () => target[key] });
+export function getter(target: any, key: string): void {
+  const capitalizedKey: string = capitalize(key);
+  const methodName: string = `get${capitalizedKey}`;
+  target[methodName] = function() {
+    const obj: any = this;
+    return obj[key];
+  };
 }
