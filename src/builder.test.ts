@@ -85,3 +85,18 @@ test('property setters actually set the property', () => {
     c: true
   });
 });
+
+test('calling builder from static method within decorated class', () => {
+  @builder
+  class Test {
+    private foo: string = 'bar';
+
+    public static simple(): Test {
+      return Test.builder().foo('baz').build();
+    }
+  }
+
+  expect(Test.simple).toBeDefined();
+  const testBuilder = Test.simple();
+  expect(testBuilder.foo).toBe('baz');
+});

@@ -7,15 +7,20 @@ export function allArgsConstructor<T extends Constructor>(Base: T) {
     constructor(...args: any[]) {
       super();
       // todo: assign each argument to its matching property
-      const built: any = {};
+      let built: Map<string, any> = new Map<string, any>();
 
-      Object.keys(this).forEach((key: string, index: number) => {
-        const value = args[index];
-        if (value) {
-          built[key] = value;
-        }
-      });
-      Object.assign(this, {...built});
+      if (args.length === 1 && args[0] instanceof Map) {
+        built = args[0];
+      } else {
+        Object.keys(this).forEach((key: string, index: number) => {
+          const value = args[index];
+          if (value) {
+            built.set(key, value);
+          }
+        });
+      }
+
+      Object.assign(this, {...Object.fromEntries(built)});
     }
   }
 }
