@@ -8,6 +8,6 @@ class Test {
 }
 
 test('creates a function that returns the correct value', () => {
-  const instance = new Test();
+  const instance = new Test() as any;
   expect(instance.getFoo()).toBe('bar');
 });

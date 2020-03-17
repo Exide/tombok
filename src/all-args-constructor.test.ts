@@ -3,6 +3,7 @@ import { allArgsConstructor } from './all-args-constructor';
 test('constructor takes all properties as arguments', () => {
   @allArgsConstructor
   class Test {
+    constructor(...args: any[]) {}
     public foo = 'bar';
     public bar = 'baz';
   }
@@ -15,6 +16,7 @@ test('constructor takes all properties as arguments', () => {
 test('constructor takes single object as argument', () => {
   @allArgsConstructor
   class Test {
+    constructor(...args: any[]) {}
     public foo = 'bar';
   }
 
@@ -29,6 +31,7 @@ test('works with private properties', () => {
   @allArgsConstructor
   class Test {
     private _secret = 'im an alien';
+    constructor(...args: any[]) {}
     public get secret() { return this._secret }
   }
 
