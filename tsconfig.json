@@ -4,7 +4,7 @@
     "module": "commonjs",
     "strict": true,
     "declaration": true,
-    "sourceMap": true,
+    "sourceMap": false,
     "experimentalDecorators": true,
     "outDir": "dist"
   },
