@@ -1,12 +1,29 @@
-import allArgsConstructor from './all-args-constructor';
+import { allArgsConstructor } from './all-args-constructor';
 
 test('constructor takes all properties as arguments', () => {
   @allArgsConstructor
   class Test {
+    constructor(...args: any[]) {}
+    public foo = 'bar';
+    public bar = 'baz';
+  }
+
+  const instance = new Test('baz', 'foo');
+  expect(instance.foo).toEqual('baz');
+  expect(instance.bar).toEqual('foo');
+});
+
+test('constructor takes single object as argument', () => {
+  @allArgsConstructor
+  class Test {
+    constructor(...args: any[]) {}
     public foo = 'bar';
   }
 
-  const instance = new Test('baz');
+  const input = new Map<string, any>();
+  input.set('foo', 'baz');
+
+  const instance = new Test(input);
   expect(instance.foo).toEqual('baz');
 });
 
@@ -14,6 +31,7 @@ test('works with private properties', () => {
   @allArgsConstructor
   class Test {
     private _secret = 'im an alien';
+    constructor(...args: any[]) {}
     public get secret() { return this._secret }
   }
 
