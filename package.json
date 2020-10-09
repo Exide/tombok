@@ -16,6 +16,9 @@
     "LICENSE",
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "homepage": "https://github.com/Exide/tombok#readme",
   "repository": {
     "type": "git",
